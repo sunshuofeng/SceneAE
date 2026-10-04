@@ -1,0 +1,33 @@
+{
+  "chunk_root": "/mnt/share/codes/kimi/ssf_dataset/scannet_first_frame_gen_chunk",
+  "stats_path": "/mnt/share/codes/kimi/ssf/E3D/dit/stats/zsp_xyz_stats_scannet_train.npz",
+  "out_mode": "sidecar",
+  "cache_root": "/mnt/share/codes/kimi/ssf_dataset/scannet_first_frame_gen_cache",
+  "overwrite": false,
+  "limit": null,
+
+  "vae": {
+    "config": "config.py",
+    "checkpoint": "/mnt/share/codes/kimi/ssf/E3D_out/vae_out/v30/latest.pth",
+    "model_module": "models.scene_vae",
+    "model_class": "SuperpointVAEGridV30",
+    "device": "cuda",
+    "devices": "auto",
+    "amp": true
+  },
+
+  "data": {
+    "resize_w": 518,
+    "resize_h": 378,
+    "depth_near": 0.001,
+    "depth_far": null,
+    "norm_depth_clip": 100.0,
+    "max_target_views": null,
+    "on_too_many_target_views": "skip",
+    "cond_query_mode": "raw",
+    "target_query_mode": "fps",
+    "num_fps_sp_xyz": 3000,
+    "cond_prefix": "first_",
+    "target_prefix": "rest_"
+  }
+}

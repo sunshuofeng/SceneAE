@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+weights/
+out/
+*.pth
+*.pt
+third_party/pointrope/build/
+third_party/superpoint_transformer/src/dependencies/FRNN/build/
