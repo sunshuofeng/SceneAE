@@ -1,6 +1,5 @@
 <div align="center">
-  <img src="assets/logo.png" width="820" alt="SceneLatent logo" />
-
+ 
   <h1>SceneLatent</h1>
 
   <p align="center">
@@ -49,7 +48,7 @@
 ## Method
 
 <p align="center">
-  <img src="assets/method.png" width="900" alt="SceneLatent method" />
+  <img src="assets/dit.png" width="900" alt="SceneLatent method" />
 </p>
 
 <p align="center">
