@@ -12,11 +12,14 @@
   </p>
 
   <p>
-    Shuofeng Sun, Wenzhao Zheng, Yunpeng Zhang, Yi Wu, Linqing Zhao, Haibin Yan<sup>†</sup>
+    Shuofeng Sun<sup>1</sup>, Wenzhao Zheng<sup>2</sup>, Yunpeng Zhang<sup>3</sup>, Yi Wu<sup>4</sup>, Linqing Zhao<sup>1</sup>, Haibin Yan<sup>1,†</sup>
   </p>
 
   <p>
-    Beijing University of Posts and Telecommunications · University of California, Berkeley · PhiGent Robotics · SynapX
+    <sup>1</sup>Beijing University of Posts and Telecommunications &nbsp;&nbsp;
+    <sup>2</sup>University of California, Berkeley<br>
+    <sup>3</sup>PhiGent Robotics &nbsp;&nbsp;
+    <sup>4</sup>SynapX
   </p>
 
   <p>
@@ -54,12 +57,24 @@ SceneAE takes a simpler route. Each latent is bound to one explicit 3D position,
 
 ## Method
 
+### Latent decoder
+
+<p align="center">
+  <img src="assets/vae.png" width="900" alt="SceneAE latent decoder" />
+</p>
+
+<p align="center">
+For the encoded or generated 3D latent data, by using a camera with any given viewpoint, the RGBD is rendered in a way of projecting query decoding, achieving efficient scene reconstruction and roaming.
+</p>
+
+### Geometry-content DiT
+
 <p align="center">
   <img src="assets/dit.png" width="900" alt="SceneAE geometry-content DiT" />
 </p>
 
 <p align="center">
-  A frozen Depth Anything 3 encoder pools features onto superpoint queries and writes the sparse latent. The grid decoder splats those anchors into RGB and depth for a target camera. Generation is two flow-matching DiTs: stage-1 predicts the 3D layout from the observed frame and the target cameras, and stage-2 predicts content on that layout.
+The DiT algorithm generates latent variables in two stages, thus keeping the geometric information and the content information separate. The first stage reads the observed frames and the target camera trajectory, and only predicts the three-dimensional position; the second stage writes the content features at each position. Therefore, the geometric transformation of the camera is only used for position generation, avoiding entanglement with appearance, thereby achieving more precise control. Additionally, content features of the anchored spatial positions are generated to enhance geometric consistency.
 </p>
 
 ## Results
@@ -67,37 +82,6 @@ SceneAE takes a simpler route. Each latent is bound to one explicit 3D position,
 <p align="center">
   <img src="assets/demo4.gif" width="900" alt="SceneAE results" />
 </p>
-
-Numbers below are from the paper, on 9-view clips at 518×376. Appearance is the 1-view setting (first frame given). Geometry reports Chamfer distance. Trajectory following uses VGGT-estimated poses.
-
-<table align="center">
-  <tr>
-    <td align="center"><h3>17.1</h3>RE10K PSNR, 1-view</td>
-    <td align="center"><h3>0.76</h3>DL3DV AUC@30</td>
-    <td align="center"><h3>8348</h3>GFLOPs / step, 1-view</td>
-  </tr>
-</table>
-
-**Appearance generation, 1-view.** Multi-view consistency is VBench MVC. GFLOPs and milliseconds are per inference step.
-
-| Method | DL3DV PSNR | DL3DV SSIM | DL3DV MVC | RE10K PSNR | RE10K SSIM | RE10K MVC | GFLOPs | ms |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Aether | 14.1 | 0.36 | 0.19 | 15.4 | 0.47 | 0.21 | 48874 | 364 |
-| Gen3R | 14.7 | 0.39 | 0.21 | 15.8 | 0.53 | 0.24 | 18105 | 174 |
-| GLD | 15.6 | 0.45 | 0.22 | 16.9 | 0.58 | 0.28 | 23203 | 285 |
-| SceneAE | 15.4 | 0.45 | 0.28 | 17.1 | 0.60 | 0.33 | 8348 | 134 |
-
-With the first and last frames given, SceneAE reaches 17.9 / 0.52 PSNR/SSIM on DL3DV and 19.8 / 0.68 on RE10K, at 9975 GFLOPs and 145 ms per step.
-
-**Geometry, trajectory, and reconstruction.**
-
-| | DL3DV | RE10K |
-|---|---:|---:|
-| 1-view Chamfer distance | 0.44 | 0.18 |
-| 2-view Chamfer distance | 0.30 | 0.08 |
-| Trajectory AUC@30 / ATE | 0.76 / 0.10 | 0.72 / 0.09 |
-
-On a round trip, forward and return views match at 30.7 PSNR and 0.93 SSIM, with depth accuracy 0.04. From 9 context frames, novel-view synthesis is 18.3 PSNR / 0.55 SSIM on DL3DV and 21.3 / 0.73 on RE10K. Input-view reconstruction is 22.2 / 0.68 on DL3DV and 26.3 / 0.84 on RE10K. Gen3R depth is scored against VGGT; SceneAE and GLD depth are scored against Depth Anything 3.
 
 ## Installation
 
