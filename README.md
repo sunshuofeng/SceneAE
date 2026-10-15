@@ -45,12 +45,12 @@ SceneAE takes a simpler route. Each latent is bound to one explicit 3D position,
 
 <table>
   <tr>
-    <td align="center"><b>3D-Anchored Latent</b><br />3,000 points. Each point is an explicit position plus a 64-d content feature for one local region of the scene.</td>
-    <td align="center"><b>Queryable RGB-D</b><br />One latent renders any discrete camera in the visible region. A new trajectory does not require a new video.</td>
+    <td align="center" width="50%"><b>Anchored Context</b><br />Each latent is bound to an explicit 3D position, so generation and reconstruction stay geometrically consistent.</td>
+    <td align="center" width="50%"><b>Compact Latent</b><br />The scene is a sparse 3D point cloud, so the representation space is smaller and  costs less compute.</td>
   </tr>
   <tr>
-    <td align="center"><b>Geometry, then Content</b><br />The camera trajectory first generates the 3D layout. Content is then synthesized on those positions with 3D RoPE.</td>
-    <td align="center"><b>Gated Position Update</b><br />The last content-sampling steps apply a per-point position correction scaled by (1 − s).</td>
+    <td align="center" width="50%"><b>Decoupled Control</b><br />The camera sets geometry before content, so control stays on the layout and does not entangle appearance.</td>
+    <td align="center" width="50%"><b>3D Memory</b><br />The latent itself stores the scene, so a revisited viewpoint reads the same anchors and stays consistent.</td>
   </tr>
 </table>
 
