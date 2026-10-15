@@ -65,7 +65,7 @@ SceneAE takes a simpler route. Each latent is bound to one explicit 3D position,
 ## Results
 
 <p align="center">
-  <img src="assets/results.png" width="900" alt="SceneAE results" />
+  <img src="assets/demo4.gif" width="900" alt="SceneAE results" />
 </p>
 
 Numbers below are from the paper, on 9-view clips at 518×376. Appearance is the 1-view setting (first frame given). Geometry reports Chamfer distance. Trajectory following uses VGGT-estimated poses.
