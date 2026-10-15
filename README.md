@@ -32,8 +32,7 @@
 </p>
 
 <p align="center">
-  <b>SceneAE stores a scene as a sparse, queryable 3D-anchored latent point cloud.</b><br />
-  Each latent is an explicit 3D position plus a content feature for its local region. The same latent renders RGB-D for any discrete camera, and a geometry-content DiT generates it.
+  <b>SceneAE constructs latents by anchoring spatial positions to support efficient scene generation and reconstruction with strong geometric consistency.</b><br />
 </p>
 
 Video generation models produce an observation of a world, not a representation of the world itself. For one scene they can only roll out a continuous camera trajectory. A viewpoint off that trajectory cannot be queried, and another rollout of the same scene may disagree in geometry and may not describe the same world.
